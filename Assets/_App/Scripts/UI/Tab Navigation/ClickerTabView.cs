@@ -4,7 +4,7 @@ using waterb.UI.Window;
 
 namespace waterb.UI.TabNavigation
 {
-	public sealed class ClickerView : MonoBehaviour, IWindow
+	public sealed class ClickerTabView : MonoBehaviour, IWindow
 	{
 		public event Action<IWindow> OnDestroyEvent;
 		

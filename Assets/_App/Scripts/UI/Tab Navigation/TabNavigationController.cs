@@ -10,18 +10,18 @@ namespace waterb.UI.TabNavigation
         private struct TabData
         {
             public TabType tabType;
-            public InterfaceReference<ITabView> view;
+            public InterfaceReference<ITabPresenter> tabPresenter;
         }
 
-        [SerializeField] private List<TabData> _tabViewsInit;
-        private Dictionary<TabType, ITabView> _tabViews;
-        private IReadOnlyDictionary<TabType, ITabView> TabViews => _tabViews ??= InitTabViews();
-        private Dictionary<TabType, ITabView> InitTabViews()
+        [SerializeField] private List<TabData> _tabPresentersInit;
+        private Dictionary<TabType, ITabPresenter> _tabPresenters;
+        private IReadOnlyDictionary<TabType, ITabPresenter> TabPresenters => _tabPresenters ??= InitTabPresenters();
+        private Dictionary<TabType, ITabPresenter> InitTabPresenters()
         {
-            var dict = new Dictionary<TabType, ITabView>();
-            foreach (var tab in _tabViewsInit)
+            var dict = new Dictionary<TabType, ITabPresenter>();
+            foreach (var tab in _tabPresentersInit)
             {
-                dict[tab.tabType] = tab.view.Value;
+                dict[tab.tabType] = tab.tabPresenter.Value;
             }
             
             return dict;
@@ -41,21 +41,21 @@ namespace waterb.UI.TabNavigation
         public void SwitchTab(TabType tabType)
         {
             _currentTab = tabType;
-            foreach (var tab in TabViews)
+            foreach (var tab in TabPresenters)
             {
-                tab.Value.Hide();
+                tab.Value.HideView();
             }
             
-            if (TabViews.TryGetValue(tabType, out var view))
+            if (TabPresenters.TryGetValue(tabType, out var view))
             {
-                view.Show();
+                view.ShowView();
             }
         }
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            _tabViews = null;
+            _tabPresenters = null;
         }
 #endif
     }

@@ -5,11 +5,12 @@ namespace waterb.UI.TabNavigation
 {
 	public sealed class TabNavigationInstaller : MonoInstaller
 	{
-		[SerializeField] private ClickerView _clickerViewPrefab;
-
+		[SerializeField] private ClickerTabPresenter _clickerTabPresenter;
+		
 		public override void InstallBindings()
 		{
-			Container.BindFactory<ClickerView, ClickerViewCreator>().FromComponentInNewPrefab(_clickerViewPrefab);
+			Container.BindFactory<ClickerTabPresenter, ClickerTabPresenterFactory>()
+				.FromComponentInNewPrefab(_clickerTabPresenter);
 		}
 	}
 }
