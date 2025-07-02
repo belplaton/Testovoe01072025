@@ -3,9 +3,9 @@ using UnityEngine;
 using waterb.UI.Window;
 using Zenject;
 
-namespace waterb.UI.TabNavigation
+namespace waterb.Features.Tab
 {
-	public abstract class AbstractTabPresenter<TModel, TView, TViewFactory> : MonoBehaviour, ITabPresenter
+	public abstract class AbstractTabController<TModel, TView, TViewFactory> : MonoBehaviour, ITabController
 		where TView : Object, IWindow
 		where TViewFactory : WindowManager.Factory<TView>
 	{

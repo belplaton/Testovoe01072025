@@ -1,6 +1,6 @@
 using waterb.UI.Window;
 
-namespace waterb.UI.TabNavigation
+namespace waterb.Features.Tab.Clicker.View
 {
 	public sealed class ClickerTabViewCreator : WindowManager.Factory<ClickerTabView>
 	{

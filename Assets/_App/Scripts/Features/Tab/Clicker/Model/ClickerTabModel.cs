@@ -1,4 +1,4 @@
-namespace waterb.UI.TabNavigation
+namespace waterb.Features.Tab.Clicker.Model
 {
 	public sealed class ClickerTabModel
 	{

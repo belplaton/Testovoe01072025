@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using waterb.UI.Window;
 
-namespace waterb.UI.TabNavigation
+namespace waterb.Features.Tab.Clicker.View
 {
 	public sealed class ClickerTabView : MonoBehaviour, IWindow
 	{

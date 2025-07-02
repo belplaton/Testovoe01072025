@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AYellowpaper;
 
-namespace waterb.UI.TabNavigation
+namespace waterb.Features.Tab.Controller
 {
     public sealed class TabNavigationController : MonoBehaviour
     {
@@ -10,18 +10,18 @@ namespace waterb.UI.TabNavigation
         private struct TabData
         {
             public TabType tabType;
-            public InterfaceReference<ITabPresenter> tabPresenter;
+            public InterfaceReference<ITabController> tabController;
         }
 
-        [SerializeField] private List<TabData> _tabPresentersInit;
-        private Dictionary<TabType, ITabPresenter> _tabPresenters;
-        private IReadOnlyDictionary<TabType, ITabPresenter> TabPresenters => _tabPresenters ??= InitTabPresenters();
-        private Dictionary<TabType, ITabPresenter> InitTabPresenters()
+        [SerializeField] private List<TabData> _tabControllersInit;
+        private Dictionary<TabType, ITabController> _tabControllers;
+        private IReadOnlyDictionary<TabType, ITabController> TabControllers => _tabControllers ??= InitTabControllers();
+        private Dictionary<TabType, ITabController> InitTabControllers()
         {
-            var dict = new Dictionary<TabType, ITabPresenter>();
-            foreach (var tab in _tabPresentersInit)
+            var dict = new Dictionary<TabType, ITabController>();
+            foreach (var tab in _tabControllersInit)
             {
-                dict[tab.tabType] = tab.tabPresenter.Value;
+                dict[tab.tabType] = tab.tabController.Value;
             }
             
             return dict;
@@ -41,12 +41,12 @@ namespace waterb.UI.TabNavigation
         public void SwitchTab(TabType tabType)
         {
             _currentTab = tabType;
-            foreach (var tab in TabPresenters)
+            foreach (var tab in TabControllers)
             {
                 tab.Value.HideView();
             }
             
-            if (TabPresenters.TryGetValue(tabType, out var view))
+            if (TabControllers.TryGetValue(tabType, out var view))
             {
                 view.ShowView();
             }
@@ -55,7 +55,7 @@ namespace waterb.UI.TabNavigation
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            _tabPresenters = null;
+            _tabControllers = null;
         }
 #endif
     }

@@ -1,4 +1,4 @@
-namespace waterb.UI.TabNavigation
+namespace waterb.Features.Tab
 {
     public enum TabType
     {

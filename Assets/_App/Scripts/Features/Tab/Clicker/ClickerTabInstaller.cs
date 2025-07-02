@@ -1,7 +1,8 @@
 using UnityEngine;
+using waterb.Features.Tab.Clicker.View;
 using Zenject;
 
-namespace waterb.UI.TabNavigation
+namespace waterb.Features.Tab.Clicker
 {
 	public sealed class ClickerTabInstaller : MonoInstaller
 	{
