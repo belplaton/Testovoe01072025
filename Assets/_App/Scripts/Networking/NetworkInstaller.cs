@@ -1,3 +1,4 @@
+using UnityEngine;
 using Zenject;
 
 namespace waterb.Networking
@@ -6,8 +7,9 @@ namespace waterb.Networking
     {
         public override void InstallBindings()
         {
-            Container.Bind<NetworkRequestQueue>().AsSingle();
-            Container.Bind<NetworkService>().AsSingle();
+            Container.Bind<NetworkRequestQueue>().FromNew().AsSingle().NonLazy();
+            Container.Bind<NetworkService>().FromNew().AsSingle().NonLazy();
+            Debug.Log("aboba");
         }
     }
 } 

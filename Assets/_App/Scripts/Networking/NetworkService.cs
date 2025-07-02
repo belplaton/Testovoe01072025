@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace waterb.Networking
 {
@@ -9,6 +10,7 @@ namespace waterb.Networking
         public NetworkService(NetworkRequestQueue queue)
         {
             _queue = queue;
+            Debug.Log("NetworkService instantiated.");
         }
 
         public UniTask<ChannelReader<IResponse>> SendAsync(IRequest request)
