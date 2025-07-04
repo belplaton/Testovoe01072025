@@ -1,62 +1,54 @@
-using System.Collections.Generic;
 using UnityEngine;
-using AYellowpaper;
+using waterb.Features.Tab.Clicker.Controller;
+using waterb.Features.Tab.View;
+using Zenject;
 
 namespace waterb.Features.Tab.Controller
 {
     public sealed class TabNavigationController : MonoBehaviour
-    {
-        [System.Serializable]
-        private struct TabData
+    { 
+        private TabNavigationView _tabNavigationView;
+        private ClickerTabController _clickerTabController;
+        
+        [Inject]
+        private void Initialize(TabNavigationView tabNavigationView,
+            ClickerTabControllerCreator clickerTabControllerCreator)
         {
-            public TabType tabType;
-            public InterfaceReference<ITabController> tabController;
-        }
-
-        [SerializeField] private List<TabData> _tabControllersInit;
-        private Dictionary<TabType, ITabController> _tabControllers;
-        private IReadOnlyDictionary<TabType, ITabController> TabControllers => _tabControllers ??= InitTabControllers();
-        private Dictionary<TabType, ITabController> InitTabControllers()
-        {
-            var dict = new Dictionary<TabType, ITabController>();
-            foreach (var tab in _tabControllersInit)
+            _tabNavigationView = tabNavigationView;
+            _clickerTabController = clickerTabControllerCreator.Create();
+            
+            _tabNavigationView.transform.SetParent(transform);
+            _clickerTabController.transform.SetParent(transform);
+            foreach (var pair in _tabNavigationView.TabButtons)
             {
-                dict[tab.tabType] = tab.tabController.Value;
+                pair.Value.onClick.AddListener(() => SwitchTab(pair.Key));
             }
             
-            return dict;
+            _tabNavigationView.ReturnButton.onClick.AddListener(() => SwitchTab(null));
         }
 
-        [SerializeField] private TabType defaultTab = TabType.Clicker;
-        private TabType? _currentTab;
-
-        private void Start()
+        public void SwitchTab(TabType? tabType)
         {
-            if (_currentTab == null)
+            _tabNavigationView.SwitchViewState(tabType != null);
+            if (tabType is null)
             {
-                SwitchTab(defaultTab);
+                _clickerTabController.HideView();
+            }
+
+            if (tabType is TabType.Clicker)
+            {
+                _clickerTabController.ShowView(_tabNavigationView.TabPlaceholder);
+            }
+
+            if (tabType is TabType.Weather)
+            {
+                _clickerTabController.HideView();
+            }
+
+            if (tabType is TabType.Breeds)
+            {
+                _clickerTabController.HideView();
             }
         }
-
-        public void SwitchTab(TabType tabType)
-        {
-            _currentTab = tabType;
-            foreach (var tab in TabControllers)
-            {
-                tab.Value.HideView();
-            }
-            
-            if (TabControllers.TryGetValue(tabType, out var view))
-            {
-                view.ShowView();
-            }
-        }
-
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            _tabControllers = null;
-        }
-#endif
     }
 } 

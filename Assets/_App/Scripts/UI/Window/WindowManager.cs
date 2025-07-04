@@ -8,7 +8,7 @@ namespace waterb.UI.Window
 {
     public sealed class WindowManager : MonoBehaviour
     {
-        public abstract class Factory<TWindow> : PlaceholderFactory<TWindow> where TWindow : IWindow
+        public abstract class Factory<TWindow> : PlaceholderFactory<TWindow> where TWindow : Component, IWindow
         {
             [Inject] private WindowManager _windowManager;
             
@@ -20,8 +20,6 @@ namespace waterb.UI.Window
             }
         }
         
-        [SerializeField] private Transform _windowRoot;
-
         private IndexedSet<IWindow> _activeWindows;
         private IndexedSet<IWindow> ActiveWindows
         {
@@ -63,7 +61,7 @@ namespace waterb.UI.Window
             {
                 var window = ActiveWindows.GetByIndex(0);
                 ActiveWindows.RemoveByIndex(0);
-                Destroy((Object)window);
+                Destroy(((Component)window).gameObject);
             }
         }
 

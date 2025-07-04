@@ -6,11 +6,14 @@ using Zenject;
 namespace waterb.Features.Tab
 {
 	public abstract class AbstractTabController<TModel, TView, TViewFactory> : MonoBehaviour, ITabController
-		where TView : Object, IWindow
+		where TView : Component, IWindow
 		where TViewFactory : WindowManager.Factory<TView>
 	{
+		[Inject] private TModel _model;
+		protected TModel Model => _model;
+		
 		[Inject] private TViewFactory _viewFactory;
-
+		
 		private TView _view;
 		[CanBeNull] protected TView View
 		{
@@ -21,11 +24,13 @@ namespace waterb.Features.Tab
 				{
 					_view?.Close();
 					_view = value;
+					OnViewCreated(value);
 				}
 			}
 		}
-        
-		public void ShowView() => View = _viewFactory.Create();
+		
+		protected virtual void OnViewCreated(TView next) { }
+		public void ShowView(Transform parent) => (View = _viewFactory.Create()).transform.SetParent(parent, false);
 		public void HideView() => View = null;
 	}
 }
