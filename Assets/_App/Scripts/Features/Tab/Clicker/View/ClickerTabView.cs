@@ -13,7 +13,8 @@ namespace waterb.Features.Tab.Clicker.View
 		public Button clickButton;
 		public TMP_Text currencyText;
 		public TMP_Text energyText;
-
+		public AudioSource audioSource;
+		
 		public event Action OnClick;
 
 		public void SetCurrency(int value)
@@ -32,9 +33,17 @@ namespace waterb.Features.Tab.Clicker.View
 		}
 
 		public void PlayClickVFX() { /* TODO */ }
-		public void PlayClickSound() { /* TODO */ }
+
+		public void PlayClickSound()
+		{
+			audioSource.Play();
+		}
 		public void PlayAutoCollectVFX() { /* TODO */ }
-		public void PlayAutoCollectSound() { /* TODO */ }
+
+		public void PlayAutoCollectSound()
+		{
+			audioSource.Play();
+		}
 
 		private void OnDestroy()
 		{
