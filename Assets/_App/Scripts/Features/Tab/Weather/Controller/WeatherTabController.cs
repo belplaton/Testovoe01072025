@@ -38,14 +38,20 @@ namespace waterb.Features.Tab.Weather.Controller
 
         public void OnTabActivated()
         {
-            _isActive = true;
-            StartWeatherRequests();
+            if (!_isActive)
+            {
+                _isActive = true;
+                StartWeatherRequests();
+            }
         }
 
         public void OnTabDeactivated()
         {
-            _isActive = false;
-            CancelWeatherRequest();
+            if (_isActive)
+            {
+                _isActive = false;
+                CancelWeatherRequest();
+            }
         }
 
         private void StartWeatherRequests()

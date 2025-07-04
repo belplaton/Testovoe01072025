@@ -49,6 +49,7 @@ MonoBehaviour:
   _tabNavigationViewPrefab: {fileID: 3991643460181819049, guid: 3d2bf6f9522e94f48b6eb9a41e991055, type: 3}
   _clickerTabControllerPrefab: {fileID: 3483780228605182920, guid: 359df87d5cd1d2d43ab54c2e7f98cb59, type: 3}
   _weatherTabControllerPrefab: {fileID: 6797564941087918105, guid: 48af6b2ffff6d1d458a94bb446f7c64a, type: 3}
+  _breedsTabControllerPrefab: {fileID: 1823084195399483498, guid: d6cc5be60425d2f46931da05c8af0ef9, type: 3}
 --- !u!114 &8328238334532149299
 MonoBehaviour:
   m_ObjectHideFlags: 0

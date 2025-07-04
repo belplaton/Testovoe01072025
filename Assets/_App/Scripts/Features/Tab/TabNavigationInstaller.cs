@@ -1,8 +1,9 @@
 using UnityEngine;
-using waterb.Features.Tab.Clicker.Controller;
 using waterb.Features.Tab.Controller;
 using waterb.Features.Tab.View;
+using waterb.Features.Tab.Clicker.Controller;
 using waterb.Features.Tab.Weather.Controller;
+using waterb.Features.Tab.Breeds.Controller;
 using Zenject;
 
 namespace waterb.Features.Tab
@@ -13,6 +14,7 @@ namespace waterb.Features.Tab
 		[SerializeField] private TabNavigationView _tabNavigationViewPrefab;
 		[SerializeField] private ClickerTabController _clickerTabControllerPrefab;
 		[SerializeField] private WeatherTabController _weatherTabControllerPrefab;
+		[SerializeField] private BreedsTabController _breedsTabControllerPrefab;
 		
 		public override void InstallBindings()
 		{
@@ -24,6 +26,8 @@ namespace waterb.Features.Tab
 				.FromComponentInNewPrefab(_clickerTabControllerPrefab).AsSingle().NonLazy();
 			Container.BindFactory<WeatherTabController, WeatherTabControllerCreator>()
 				.FromComponentInNewPrefab(_weatherTabControllerPrefab).AsSingle().NonLazy();
+			Container.BindFactory<BreedsTabController, BreedsTabControllerCreator>()
+				.FromComponentInNewPrefab(_breedsTabControllerPrefab).AsSingle().NonLazy();
 			
 			Container.Inject(_tabNavigationController);
 		}
