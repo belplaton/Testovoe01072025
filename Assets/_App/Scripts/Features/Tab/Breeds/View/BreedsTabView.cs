@@ -14,8 +14,9 @@ namespace waterb.Features.Tab.Breeds.View
         [SerializeField] private BreedButton breedButtonPrefab;
         [SerializeField] private GameObject loader;
 
-        [Header("Popup fact")] 
-        [SerializeField] private GameObject factPopup;
+        [Header("Popup fact")]
+        [SerializeField] private float maxHeight;
+        [SerializeField] private RectTransform factPopup;
         [SerializeField] private TMP_Text factTitle;
         [SerializeField] private TMP_Text factDescription;
         [SerializeField] private Button okButton;
@@ -52,14 +53,16 @@ namespace waterb.Features.Tab.Breeds.View
 
         public void ShowFactPopup(BreedFact fact)
         {
-            factPopup?.SetActive(true);
-            if (factTitle != null) factTitle.text = fact.Title;
-            if (factDescription != null) factDescription.text = fact.Description;
-            okButton?.onClick.RemoveAllListeners();
-            okButton?.onClick.AddListener(() => OnCloseFactPopup?.Invoke());
+            factPopup.gameObject.SetActive(true);
+            factTitle.text = fact.Title;
+            factDescription.text = fact.Description;
+            factDescription.ForceMeshUpdate();
+            okButton.onClick.RemoveAllListeners();
+            okButton.onClick.AddListener(() => OnCloseFactPopup?.Invoke());
+            LayoutRebuilder.ForceRebuildLayoutImmediate(factPopup);
         }
 
-        public void HideFactPopup() => factPopup?.SetActive(false);
+        public void HideFactPopup() => factPopup.gameObject.SetActive(false);
 
         private void ClearBreedsList()
         {
